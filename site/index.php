@@ -13,13 +13,14 @@
   		<script src="http://d3js.org/d3.v3.min.js"></script>
   		<script src="http://dimplejs.org/dist/dimple.v1.1.5.min.js"></script>
         <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+        <script src="js/stats.js"></script>
         <style>.tooltip{opacity: 0.9;}</style> <!-- this fixes a conflict with dimple and bootstrap -->
     </head>
     <body>
         <!--[if lt IE 8]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
+        <?php include "widgets/aggregate_stats.php" ?>
         <nav class="navbar navbar-default" role="navigation">
             <div class="container">
                 <!-- Brand and toggle get grouped for better mobile display -->
@@ -35,19 +36,19 @@
                 
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-navbar-collapse-1">
+                	<h4 class="text-right text-muted" href="#">Average Lifespan: <?php echo $aggregate_stats["Avg Mins Lived"]; ?> mins. <span class="text-danger">Ready To Die?</span></h4>
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
         </nav>
-        <?php include "widgets/aggregate_stats.php" ?>
         <div class="container">
         	<div class="jumbotron text-center">
             	<h1>Over <?php echo $aggregate_stats["Unique Players"]; ?> unique players!</h1>
             	<h3><?php echo $aggregate_stats["Active Players"]; ?> active in last 2 weeks</h3>
             </div>
         	<div class="row">
-            	<div class="col-md-3">
+            	<div class="col-md-4">
                 	<div class="panel panel-default">
-                    	<div class="panel-heading">Summary (Aggregate Stats)</div>
+                    	<div class="panel-heading">Aggregate Stats</div>
                         <div class="panel-body">
                             <table class="table">
                             	<thead hidden>
@@ -65,16 +66,25 @@
                             </table>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-9">
                 	<div class="panel panel-default">
-                    	<div class="panel-heading">Server Lifeline (Daily Stats)</div>
-                        <div id="div-daily-stats" class="panel-body"></div>
+                    	<div class="panel-heading">Last Week</div>
+                        <div class="panel-body text-center"><div id="div-daily-stats-sm"></div></div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                	<div class="panel panel-default">
+                    	<div class="panel-heading">Server Lifeline</div>
+                        <div class="panel-body text-center"><div id="div-daily-stats"></div></div>
                     </div>
                 </div>
             </div>
         </div>
-        <?php include "widgets/daily_stats.php"; ?>
+        <script>
+			$(document).ready(function() {
+				daily_stats("#div-daily-stats",30,true,500);
+				daily_stats("#div-daily-stats-sm",7,false,500);
+			});
+		</script>
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
             (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=

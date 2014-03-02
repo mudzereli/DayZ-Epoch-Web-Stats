@@ -28,17 +28,17 @@ comment 'builds daily stat table that can be queried for data'
 begin
     drop table if exists t_daily_stats;
     create table t_daily_stats as
-    select "New Players"        as METRIC, count(*) as COUNT, date(PLAYERFIRSTLOGIN) as DATE from v_player_data group by date(PLAYERFIRSTLOGIN)
+    select "New Players"        as METRIC, count(*) as VALUE, date(PLAYERFIRSTLOGIN) as DATE from v_player_data group by date(PLAYERFIRSTLOGIN)
     union all
-    select "Inactive Players"   as METRIC, count(*) as COUNT, INTERVAL 15 DAY + date(PLAYERLASTLOGIN) as DATE from v_player_data group by date(PLAYERLASTLOGIN)
+    select "Inactive Players"   as METRIC, count(*) as VALUE, INTERVAL 15 DAY + date(PLAYERLASTLOGIN) as DATE from v_player_data group by date(PLAYERLASTLOGIN)
     union all
-    select "Characters Killed"  as METRIC, count(*) as COUNT, date(LASTLOGIN) as DATE from Character_DATA where ALIVE = 0 group by date(LASTLOGIN)
+    select "Characters Killed"  as METRIC, count(*) as VALUE, date(LASTLOGIN) as DATE from Character_DATA where ALIVE = 0 group by date(LASTLOGIN)
     union all                                                                 
-    select "Characters Created" as METRIC, count(*) as COUNT, date(DATESTAMP) as DATE from Character_DATA group by date(DATESTAMP)
+    select "Characters Created" as METRIC, count(*) as VALUE, date(DATESTAMP) as DATE from Character_DATA group by date(DATESTAMP)
     union all                                                                 
-    select "Structures Built"   as METRIC, count(*) as COUNT, date(DATESTAMP) as DATE from Object_DATA a inner join v_object_class b on a.CLASSNAME = b.CLASSNAME where b.CATEGORY in ("LOCKABLE","DEPLOYABLE") group by date(DATESTAMP)
+    select "Structures Built"   as METRIC, count(*) as VALUE, date(DATESTAMP) as DATE from Object_DATA a inner join v_object_class b on a.CLASSNAME = b.CLASSNAME where b.CATEGORY in ("LOCKABLE","DEPLOYABLE") group by date(DATESTAMP)
     union all                                                                 
-    select "Vehicles Spawned"   as METRIC, count(*) as COUNT, date(DATESTAMP) as DATE from Object_DATA a inner join v_object_class b on a.CLASSNAME = b.CLASSNAME where b.CATEGORY = "VEHICLE" group by date(DATESTAMP)
+    select "Vehicles Spawned"   as METRIC, count(*) as VALUE, date(DATESTAMP) as DATE from Object_DATA a inner join v_object_class b on a.CLASSNAME = b.CLASSNAME where b.CATEGORY = "VEHICLE" group by date(DATESTAMP)
     ;
 end//
 delimiter ;
@@ -50,41 +50,41 @@ comment 'builds flat table of statistics'
 begin
     drop table if exists t_aggregate_stats;
     create table t_aggregate_stats as
-    select "Unique Players" as METRIC, count(*) as COUNT from v_player_data
+    select "Unique Players" as METRIC, count(*) as VALUE from v_player_data
     union all
-    select "Active Players" as METRIC, count(*) as COUNT from v_player_data where date(PLAYERLASTLOGIN) >= (now() - INTERVAL 15 DAY)
+    select "Active Players" as METRIC, count(*) as VALUE from v_player_data where date(PLAYERLASTLOGIN) >= (now() - INTERVAL 15 DAY)
     union all
-    select "Player Logins" as METRIC, count(*) as COUNT from Player_LOGIN where ACTION = 0
+    select "Player Logins" as METRIC, count(*) as VALUE from Player_LOGIN where ACTION = 0
     union all
-    select "Characters Created" as METRIC, count(*) as COUNT from Character_DATA
+    select "Characters Created" as METRIC, count(*) as VALUE from Character_DATA
     union all
-    select "Dead Characters" as METRIC, count(*) as COUNT from Character_DATA where ALIVE = 0
+    select "Dead Characters" as METRIC, count(*) as VALUE from Character_DATA where ALIVE = 0
     union all
-    select "Live Characters" as METRIC, count(*) as COUNT from Character_DATA where ALIVE = 1
+    select "Live Characters" as METRIC, count(*) as VALUE from Character_DATA where ALIVE = 1
     union all
-    select "Zombie Kills" as METRIC, sum(KILLSZ) as COUNT from Character_DATA
+    select "Zombie Kills" as METRIC, sum(KILLSZ) as VALUE from Character_DATA
     union all
-    select "Zombie Headshots" as METRIC, sum(HEADSHOTSZ) as COUNT from Character_DATA
+    select "Zombie Headshots" as METRIC, sum(HEADSHOTSZ) as VALUE from Character_DATA
     union all
-    select "Survivors PKed" as METRIC, sum(KILLSH) as COUNT from Character_DATA
+    select "Survivors PKed" as METRIC, sum(KILLSH) as VALUE from Character_DATA
     union all
-    select "Distance Foot" as METRIC, sum(DISTANCEFOOT) as COUNT from Character_DATA
+    select "Distance Foot" as METRIC, sum(DISTANCEFOOT) as VALUE from Character_DATA
     union all
-    select "Bandits PKed" as METRIC, sum(KILLSB) as COUNT from Character_DATA
+    select "Bandits PKed" as METRIC, sum(KILLSB) as VALUE from Character_DATA
     union all
-    select "Avg Humanity" as METRIC, round(avg(HUMANITY)) as COUNT from Character_DATA where ALIVE = 1
+    select "Avg Humanity" as METRIC, round(avg(HUMANITY)) as VALUE from Character_DATA where ALIVE = 1
     union all
-    select "Avg Generation" as METRIC, round(avg(GENERATION)) as COUNT from Character_DATA where ALIVE = 1
+    select "Avg Generation" as METRIC, round(avg(GENERATION)) as VALUE from Character_DATA where ALIVE = 1
     union all
-    select "Avg Mins Lived" as METRIC, round(avg(DURATION)) as COUNT from Character_DATA where DURATION > 0
+    select "Avg Mins Lived" as METRIC, round(avg(DURATION)) as VALUE from Character_DATA where DURATION > 0
     union all
-    select "Heroes" as METRIC, count(*) as COUNT from Character_DATA where ALIVE = 1 and HUMANITY >= 5000
+    select "Heroes" as METRIC, count(*) as VALUE from Character_DATA where ALIVE = 1 and HUMANITY >= 5000
     union all
-    select "Bandits" as METRIC, count(*) as COUNT from Character_DATA where ALIVE = 1 and HUMANITY <= -5000
+    select "Bandits" as METRIC, count(*) as VALUE from Character_DATA where ALIVE = 1 and HUMANITY <= -5000
     union all
-    select "Structures" as METRIC, count(*) as COUNT from Object_DATA a inner join v_object_class b on a.CLASSNAME = b.CLASSNAME where b.CATEGORY in ("LOCKABLE","DEPLOYABLE")
+    select "Structures" as METRIC, count(*) as VALUE from Object_DATA a inner join v_object_class b on a.CLASSNAME = b.CLASSNAME where b.CATEGORY in ("LOCKABLE","DEPLOYABLE")
     union all                                                                 
-    select "Vehicles"   as METRIC, count(*) as COUNT from Object_DATA a inner join v_object_class b on a.CLASSNAME = b.CLASSNAME where b.CATEGORY = "VEHICLE"
+    select "Vehicles"   as METRIC, count(*) as VALUE from Object_DATA a inner join v_object_class b on a.CLASSNAME = b.CLASSNAME where b.CATEGORY = "VEHICLE"
     ;
 end//
 delimiter ;

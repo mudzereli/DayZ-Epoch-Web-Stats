@@ -1,10 +1,11 @@
 <?php
+	
 	include "../config.php";
 	
     $server = mysql_connect($host, $username, $password);
     $connection = mysql_select_db($database, $server);
 
-    $myquery = "select * from t_daily_stats where DATE >= (now() - INTERVAL 30 DAY) and DATE <= now()";
+    $myquery = "select * from t_daily_stats where DATE >= (now() - INTERVAL " . $_GET["days"] . " DAY) and DATE <= now()";
 	
     $query = mysql_query($myquery);
 

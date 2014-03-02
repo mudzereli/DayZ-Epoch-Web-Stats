@@ -14,7 +14,7 @@
     }
 
 	while ($row = mysql_fetch_assoc($query)) {
-		$aggregate_stats[$row["METRIC"]] = $row["COUNT"];
+		$aggregate_stats[$row["METRIC"]] = $row["VALUE"];
 	}
 
 	arsort($aggregate_stats);
