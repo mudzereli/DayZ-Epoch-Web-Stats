@@ -47,7 +47,7 @@
             </div>
         	<div class="row">
             	<div class="col-md-4">
-                	<div class="panel panel-default">
+                	<div class="panel panel-info">
                     	<div class="panel-heading">Aggregate Stats</div>
                         <div class="panel-body">
                             <table class="table">
@@ -66,15 +66,39 @@
                             </table>
                         </div>
                     </div>
-                	<div class="panel panel-default">
+                	<div class="panel panel-danger">
                     	<div class="panel-heading">Last Week</div>
                         <div class="panel-body text-center"><div id="div-daily-stats-sm"></div></div>
                     </div>
+                	<div class="panel panel-warning">
+                    	<div class="panel-heading">Deployables <span class="badge pull-right"><?php echo $aggregate_stats["Deployables"]; ?></span></div>
+                        <div class="panel-body text-center"><div id="div-server-deployables"></div></div>
+                    </div>
+                	<div class="panel panel-warning">
+                    	<div class="panel-heading">Vehicles <span class="badge pull-right"><?php echo $aggregate_stats["Vehicles"]; ?></span></div>
+                        <div class="panel-body text-center"><div id="div-server-vehicles"></div></div>
+                    </div>
+                	<div class="panel panel-warning">
+                    	<div class="panel-heading">Lockables <span class="badge pull-right"><?php echo $aggregate_stats["Lockables"]; ?></span></div>
+                        <div class="panel-body text-center"><div id="div-server-lockables"></div></div>
+                    </div>
                 </div>
                 <div class="col-md-8">
-                	<div class="panel panel-default">
-                    	<div class="panel-heading">Server Lifeline</div>
+                	<div class="panel panel-danger">
+                    	<div class="panel-heading">Server Lifeline (Last Month)</div>
                         <div class="panel-body text-center"><div id="div-daily-stats"></div></div>
+                    </div>
+                	<div class="panel panel-warning">
+                    	<div class="panel-heading">Server Object Summary <span class="badge pull-right"><?php echo $aggregate_stats["Objects"]; ?></span></div>
+                        <div class="panel-body text-center"><div id="div-server-objects"></div></div>
+                    </div>
+                	<div class="panel panel-success">
+                    	<div class="panel-heading">Living Survivor Summary <span class="badge pull-right"><?php echo $aggregate_stats["Live Characters"]; ?></span></div>
+                        <div class="panel-body text-center"><div id="div-server-survivors"></div></div>
+                    </div>
+                	<div class="panel panel-danger">
+                    	<div class="panel-heading">Death Log <span class="badge pull-right"><?php echo ($aggregate_stats["Dead Characters"] + $aggregate_stats["Zombie Kills"] + $aggregate_stats["Bandits PKed"] + $aggregate_stats["Survivors PKed"]); ?></span></div>
+                        <div class="panel-body text-center"><div id="div-server-deaths"></div></div>
                     </div>
                 </div>
             </div>
@@ -83,6 +107,14 @@
 			$(document).ready(function() {
 				daily_stats("#div-daily-stats",30,true,500);
 				daily_stats("#div-daily-stats-sm",7,false,500);
+				object_stats("#div-server-objects","ALL",true,false,500);
+				object_stats("#div-server-deployables","DEPLOYABLE",false,false,500);
+				object_stats("#div-server-vehicles","VEHICLE",false,false,500);
+				object_stats("#div-server-lockables","LOCKABLE",false,false,500);
+				survivor_stats("#div-server-survivors",true,false,500);
+				survivor_stats("#div-server-survivors",false,false,500);
+				death_stats("#div-server-deaths",true,false,500);
+				death_stats("#div-server-deaths",false,false,500);
 			});
 		</script>
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->

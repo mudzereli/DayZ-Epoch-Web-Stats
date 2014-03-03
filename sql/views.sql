@@ -78,13 +78,26 @@ begin
     union all
     select "Avg Mins Lived" as METRIC, round(avg(DURATION)) as VALUE from Character_DATA where DURATION > 0
     union all
-    select "Heroes" as METRIC, count(*) as VALUE from Character_DATA where ALIVE = 1 and HUMANITY >= 5000
+    select case when HUMANITY >= 5000  then "Heroes"
+                when HUMANITY <= -5000 then "Bandits"
+                else                        "Survivors"
+           end as METRIC, 
+           count(*) as VALUE 
+    from Character_DATA where ALIVE = 1
+    group by METRIC
     union all
-    select "Bandits" as METRIC, count(*) as VALUE from Character_DATA where ALIVE = 1 and HUMANITY <= -5000
+    select "Objects" as METRIC, count(*) as VALUE from Object_DATA
     union all
     select "Structures" as METRIC, count(*) as VALUE from Object_DATA a inner join v_object_class b on a.CLASSNAME = b.CLASSNAME where b.CATEGORY in ("LOCKABLE","DEPLOYABLE")
-    union all                                                                 
-    select "Vehicles"   as METRIC, count(*) as VALUE from Object_DATA a inner join v_object_class b on a.CLASSNAME = b.CLASSNAME where b.CATEGORY = "VEHICLE"
+    union all
+    select case when b.CATEGORY = "VEHICLE"    then "Vehicles"
+                when b.CATEGORY = "DEPLOYABLE" then "Deployables"
+                when b.CATEGORY = "LOCKABLE"   then "Lockables"
+                else                                "Unknown"
+           end as METRIC,
+           count(*) as VALUE 
+    from Object_DATA a inner join v_object_class b on a.CLASSNAME = b.CLASSNAME
+    group by METRIC
     ;
 end//
 delimiter ;
