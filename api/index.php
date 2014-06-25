@@ -133,7 +133,7 @@ function getObjectChartData() {
 
 function getLogins($limit) {
     global $CHARACTER_DATA, $PLAYER_DATA;
-    echo runQuery("select a.PlayerUID, a.PlayerName, b.LastLogin from $PLAYER_DATA a inner join $CHARACTER_DATA b on a.PlayerUID = b.PlayerUID where b.Alive = 0 order by b.LastLogin desc limit $limit");
+    echo runQuery("select a.PlayerUID, a.PlayerName, b.LastLogin from $PLAYER_DATA a inner join $CHARACTER_DATA b on a.PlayerUID = b.PlayerUID order by b.LastLogin desc limit $limit");
 }
 
 function getObjectsByCreatedDateChartData() {
