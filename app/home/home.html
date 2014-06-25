@@ -1,0 +1,16 @@
+<h1 class="text-center">Overall Server Statistics</h1>
+<hr>
+<div class="col-sm-8">
+    <div ng-include="" src="'app/partials/leaderboard.html'"></div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div ng-include="" src="'app/partials/recent_logins.html'"></div>
+        </div>
+        <div class="col-sm-6">
+            <div ng-include="" src="'app/partials/chart_panel.html'" ng-controller="ObjectChartController"></div>
+        </div>
+    </div>
+</div>
+<div class="col-sm-4">
+    <div ng-include="" src="'app/partials/summary_stats.html'"></div>
+</div>

@@ -1,0 +1,17 @@
+<div class="panel panel-success" ng-controller="RecentLoginsController">
+    <div class="panel-heading">Recent Logins</div>
+    <div class="panel-body">
+        <table class="table">
+            <thead>
+                <th>Player Name</th>
+                <th>Last Login</th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="player in logins">
+                    <td>{{player.PlayerName}}</td>
+                    <td>{{player.LastLogin}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

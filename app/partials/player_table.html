@@ -1,0 +1,87 @@
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-sm-4 col-sm-offset-4">Player Table</div>
+            <div class="col-sm-4 pull-right">
+                <div class="input-group">
+                    <input type="text" class="form-control" ng-model="$parent.filter" ng-focus="disableFilter()" placeholder="Search Players...">
+                    <div class="input-group-btn">
+                        <button type="submit" ng-class="{'btn':true, 'btn-default':!playerTable.isFiltered, 'btn-info   ':playerTable.isFiltered}" ng-click="toggleFilter()"><span ng-class="{'glyphicon':true, 'glyphicon-filter':true}"></span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel-body">
+        <table class="table table-hover">
+            <thead>
+                <th ng-click="select('PlayerName')">
+                    PlayerName  
+                    <span ng-class="{'glyphicon': true, 'glyphicon-chevron-up': !isSortDescending(), 'glyphicon-chevron-down': isSortDescending()}" ng-show="isSelected('PlayerName')"> </span>
+                </th>
+                <th ng-click="select('ZombieKills')">
+                    ZombieKills 
+                    <span ng-class="{'glyphicon': true, 'glyphicon-chevron-up': !isSortDescending(), 'glyphicon-chevron-down': isSortDescending()}" ng-show="isSelected('ZombieKills')"></span>
+                </th>
+                <th ng-click="select('Humanity')">
+                    Humanity 
+                    <span ng-class="{'glyphicon': true, 'glyphicon-chevron-up': !isSortDescending(), 'glyphicon-chevron-down': isSortDescending()}" ng-show="isSelected('Humanity')"></span>
+                </th>
+                <th ng-click="select('Generation')">
+                    Generation 
+                    <span ng-class="{'glyphicon': true, 'glyphicon-chevron-up': !isSortDescending(), 'glyphicon-chevron-down': isSortDescending()}" ng-show="isSelected('Generation')"></span>
+                </th>
+                <th ng-click="select('Alive')">
+                    Alive 
+                    <span ng-class="{'glyphicon': true, 'glyphicon-chevron-up': !isSortDescending(), 'glyphicon-chevron-down': isSortDescending()}" ng-show="isSelected('Alive')"></span>
+                </th>
+                <th ng-click="select('AvgLife')">
+                    Avg Life (mins) 
+                    <span ng-class="{'glyphicon': true, 'glyphicon-chevron-up': !isSortDescending(), 'glyphicon-chevron-down': isSortDescending()}" ng-show="isSelected('AvgLife')"></span>
+                </th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="player in players" tooltip-html-unsafe=" 
+                    <h4>{{player.PlayerName}}</h4>
+                    <div class='tooltip-divider'></div>
+                    <div class='text-left'>
+                        PlayerUID:        <span class='pull-right'>{{player.PlayerUID}}</span><br>
+                        Alive:            <span class='pull-right'>{{player.Alive}}</span><br>
+                        Model:            <span class='pull-right'>{{player.Model}}</span><br>
+                        <div class='tooltip-divider'></div>
+                        Generation:       <span class='pull-right'>{{player.Generation}}</span><br>
+                        Avg Life:         <span class='pull-right'>{{player.AvgLife | number:0}} mins</span><br>
+                        Humanity:         <span class='pull-right'>{{player.Humanity}}</span><br>
+                        Distance:         <span class='pull-right'>{{player.Distance}}</span><br>
+                        <div class='tooltip-divider'></div>
+                        Zombie Headshots: <span class='pull-right'>{{player.ZombieHeadshots}}</span><br>
+                        Zombie Kills:     <span class='pull-right'>{{player.ZombieKills}}</span><br>
+                        Bandit Kills:     <span class='pull-right'>{{player.BanditKills}}</span><br>
+                        Human Kills:      <span class='pull-right'>{{player.HumanKills}}</span><br>
+                    </div>
+                " tooltip-placement="left" tooltip-append-to-body="true">
+                    <td>{{player.PlayerName}}</td>
+                    <td>{{player.ZombieKills}}</td>
+                    <td>{{player.Humanity}}</td>
+                    <td>{{player.Generation}}</td>
+                    <td><span ng-class="{'glyphicon': true, 'glyphicon-ok': isAlive(player), 'glyphicon-remove': !isAlive(player)}"></span></td>
+                    <td>{{player.AvgLife | number:0}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <hr>
+        <div class="text-center">
+            <ul class="pagination pagination-lg" style="font-weight: bolder">
+                <li ng-class="{disabled:playerTable.page === 1}"><a href="" ng-click="setPage(1)">&laquo;</a></li>
+                <li ng-class="{disabled:playerTable.page === 1}"><a href="" ng-click="setPage(playerTable.page - 1)">&lsaquo;</a></li>
+                <li ng-if="(playerTable.page - 2 > 0) && (playerTable.page - 2 <= playerTable.pages)">               <a href="" ng-click="setPage(playerTable.page - 2)">{{playerTable.page - 2}}</a></li>
+                <li ng-if="(playerTable.page - 1 > 0) && (playerTable.page - 1 <= playerTable.pages)">               <a href="" ng-click="setPage(playerTable.page - 1)">{{playerTable.page - 1}}</a></li>
+                <li ng-if="(playerTable.page + 0 > 0) && (playerTable.page + 0 <= playerTable.pages)" class="active"><a href="" ng-click="setPage(playerTable.page + 0)">{{playerTable.page + 0}}</a></li>
+                <li ng-if="(playerTable.page + 1 > 0) && (playerTable.page + 1 <= playerTable.pages)">               <a href="" ng-click="setPage(playerTable.page + 1)">{{playerTable.page + 1}}</a></li>
+                <li ng-if="(playerTable.page + 2 > 0) && (playerTable.page + 2 <= playerTable.pages)">               <a href="" ng-click="setPage(playerTable.page + 2)">{{playerTable.page + 2}}</a></li>
+                <li ng-class="{disabled:playerTable.page === playerTable.pages}"><a href="" ng-click="setPage(playerTable.page + 1)">&rsaquo;</a></li>
+                <li ng-class="{disabled:playerTable.page === playerTable.pages}"><a href="" ng-click="setPage(playerTable.pages)"   >&raquo;</a></li>
+            </ul>
+        </div>
+    </div>
+</div>

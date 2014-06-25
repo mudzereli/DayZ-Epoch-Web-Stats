@@ -1,0 +1,19 @@
+<div class="panel panel-warning">
+    <div class="panel-heading">Leaderboard</div>
+    <div class="panel-body">
+        <table class="table">
+            <thead>
+                <th>Leader</th>
+                <th>Achievement</th>
+                <th>#</th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="leader in leaders">
+                    <td>{{leader.PlayerName}}</td>
+                    <td>{{leader.Metric}}</td>
+                    <td>{{leader.Value}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

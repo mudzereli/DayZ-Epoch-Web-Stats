@@ -1,0 +1,15 @@
+<div class="panel panel-info">
+    <div class="panel-heading">
+        Leaderboard
+    </div>
+    <div class="panel-body">
+        <div class="row leaderboard-container">
+            <div class="col-sm-3 col-xs-12" ng-repeat="leader in leaders">
+                <div class="award-name">{{leader.PlayerName}}</div>
+                <img class="img-responsive img-thumbnail" src="img/leaders{{$index}}.jpg">
+                <h4 class="award-title">{{leader.Metric}}</h4>
+                <div class="text-center award-badge"><span class="badge">{{leader.Value}}</span></div>
+            </div>
+        </div>
+    </div>
+</div>

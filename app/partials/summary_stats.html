@@ -1,0 +1,21 @@
+<div class="panel panel-warning">
+    <div class="panel-heading">
+        Server Summary
+    </div>
+    <div class="panel-body">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <th>Metric</th>
+                    <th>Value</th>
+                </thead> 
+                <tbody>
+                    <tr ng-repeat="stat in summary">
+                        <td>{{stat.METRIC}}</td>
+                        <td class="text-right">{{stat.VALUE | number:0}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
