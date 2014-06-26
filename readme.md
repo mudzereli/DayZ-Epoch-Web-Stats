@@ -15,5 +15,5 @@ View a sample here: http://stats.mudzereli.com/
 **Install Instructions**
 
 1. [download zip file](https://github.com/mudzereli/DayZ-Epoch-Web-Stats/archive/master.zip)
-2. edit config.php
-3. extract files to website directory where you want the page
+2. extract files to website directory where you want the page
+3. edit config.php (in root directory)
