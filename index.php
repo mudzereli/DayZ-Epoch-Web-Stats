@@ -37,7 +37,7 @@
       <div id="content" class="container" ng-view></div>
       
       <!-- footer -->
-      <footer class="footer">&copy; 2014 -- <?php echo $SERVER_NAME; ?> -- DayZ Epoch Server Stats by <a href="http://www.mudzereli.com">mudzereli</a></footer>
+      <footer class="footer">&copy; 2014 -- <?php echo $SERVER_NAME; ?> -- powered by <a href="https://github.com/mudzereli/DayZ-Epoch-Web-Stats">DayZ Epoch Server Stats</a></footer>
 
       <!-- javascript includes -->
       <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.16/angular.min.js"></script>
