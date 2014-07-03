@@ -6,6 +6,7 @@
     
     // enter your MYSQL database connection details below
     $DB_HOST = "XXXXXX";
+    $DB_PORT = "XXXXXX"; // typically 3306
     $DB_NAME = "XXXXXX";
     $DB_USER = "XXXXXX";
     $DB_PASS = "XXXXXX";

@@ -242,11 +242,11 @@ function runQuery($sql) {
 }
 
 function getConnection() {
-    global $DB_HOST, $DB_NAME, $DB_USER, $DB_PASS;
+    global $DB_HOST, $DB_NAME, $DB_USER, $DB_PASS, $DB_PORT;
     $options = array(
         PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
     ); 
-    $dbh = new PDO(sprintf('mysql:host=%s;dbname=%s',$DB_HOST,$DB_NAME), $DB_USER, $DB_PASS, $options);
+    $dbh = new PDO(sprintf('mysql:host=%s;dbname=%s;port=%s',$DB_HOST,$DB_NAME,$DB_PORT), $DB_USER, $DB_PASS, $options);
     return $dbh;
 }
 
