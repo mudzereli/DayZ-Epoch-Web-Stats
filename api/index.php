@@ -206,8 +206,6 @@ function getSummary() {
         union all  
         select 'Destroyed Vehicles'      as METRIC,   count(*)          as VALUE from $OBJECT_DATA where (Fuel > 0 or Hitpoints not in ('[]') or Classname = 'MMT_Civ') and Damage = 1
         union all  
-        select 'Destroyed Vehicles'      as METRIC,   count(*)          as VALUE from $OBJECT_DATA where (Fuel > 0 or Hitpoints not in ('[]') or Classname = 'MMT_Civ') and Damage = 1
-        union all  
         select 'Zombie Headshots'        as METRIC,   sum(HeadshotsZ)   as VALUE from $CHARACTER_DATA
         union all  
         select 'Zombies Killed'          as METRIC,   sum(KillsZ)       as VALUE from $CHARACTER_DATA
