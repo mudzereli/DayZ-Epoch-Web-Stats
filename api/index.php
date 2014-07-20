@@ -85,11 +85,11 @@ function getLeaders() {
             union all
         (select PlayerName, 'Hero' as Metric, Humanity as Value 
         from $CHARACTER_DATA a inner join $PLAYER_DATA b on a.PlayerUID = b.PlayerUID 
-        group by a.PlayerUID order by Humanity desc limit 1)
+        order by Humanity desc limit 1)
             union all
         (select PlayerName, 'Bandit' as Metric, Humanity as Value 
         from $CHARACTER_DATA a inner join $PLAYER_DATA b on a.PlayerUID = b.PlayerUID 
-        group by a.PlayerUID order by Humanity asc limit 1)
+        order by Humanity asc limit 1)
             union all
         (select PlayerName, 'Deaths' as Metric, count(*) as Value 
         from $CHARACTER_DATA a inner join $PLAYER_DATA b on a.PlayerUID = b.PlayerUID 
